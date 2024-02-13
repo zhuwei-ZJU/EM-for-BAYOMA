@@ -8,7 +8,7 @@ tic; % start counting computational time
 
 % extract fields for convenience
 fs = in.fs; f0 = in.f0; f1f2 = in.f1f2;
-z0 = in.z0; maxiter = in.maxiter; %tol_svd = in.tol_svd;
+z0 = in.z0; maxiter = in.maxiter; 
 tol_cvg = in.tol_cvg; %tol_hess = in.tol_hess; 
 zlim = in.zlim; snmin = in.snmin; nt = in.nt;
 

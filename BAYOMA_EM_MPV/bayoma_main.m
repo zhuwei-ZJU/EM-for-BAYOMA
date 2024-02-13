@@ -9,7 +9,7 @@ function out = bayoma_main(in)
 %   1. Li, Binbin; Au, Siu-Kui. An expectation-maximization algorithm for 
 %       Bayesian operational modal analysis with multiple (possibly close)
 %       modes. Mechanical Systems and Signal Processing, 2019,132:490-511.
-%   2. Zhu, Wei and Li, Binbin, Em-Aided Fast Posterior Covariance Computation
+%   2. Zhu, Wei and Li, Binbin, EM-Aided Fast Posterior Covariance Computation
 %       in Bayesian FFT Method. Mechanical Systems and Signal Processing.
 % IN contains the following mandatory fields:
 %   tdata = (nt,n) ambient data; nt = no. of time points; n = no. of dofs
@@ -53,10 +53,9 @@ function out = bayoma_main(in)
 %   band 1, [...] of band 2, [...] of band 3, etc
 %
 % Note: 
-% 1. The EM does not work well for modal signal-to-noise ratio S/(4z^2*Se)
-% greater than 1e5. A warning will be issued if it happens. 
-% 2. The MPV and COV parts of the program are sufficiently independent. It is 
-% also possible to nest the other part if there is an algorithm that solves one part faster.
+% The EM algorithm may be difficult to converge to true parameter values when
+% the modal signal-to-noise ratio S/(4z^2*Se) is greater than 1e5. A warning 
+% will be issued if it happens. 
 
 % copyright statement
 disp('============================================');
@@ -67,12 +66,11 @@ disp('============================================');
 
 %% defaults
 in_default.maxiter = 500;  % max. no. of iterations in determining MPV
-in_default.tol_cvg = 1e-3;  % convergence criterion
+in_default.tol_cvg = 1e-5;  % convergence criterion
 in_default.tol_hess = 1e-4;
 in_default.z0 = 1e-2; % initial guess of damping
 in_default.zlim = [1e-4 1]; % range of z outside which result will be nan
 in_default.snmin = 1; % s/n ration below which result will be nan
-in_default.tol_svd = 1e-2; % singular value threshold for deciding mode shape space dim.
 in_default.options_fmins = optimset('TolX',in_default.tol_cvg/10,...
                    'TolFun',in_default.tol_cvg/10);
 in_default.p = 0;   % acceleration data
@@ -165,7 +163,7 @@ for ii=2:nb
   end
 end
 
-% 240212 add EM cov by Wei at UIUC
+% Posterior covariance
 fprintf('Computing Hessian for posterior covariance matrix ... ');
 fprintf('by analytical formula ... ');
 fprintf('\n');
