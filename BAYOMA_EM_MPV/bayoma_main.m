@@ -45,13 +45,6 @@ function out = bayoma_main(in)
 %    f(:),z(:),S(:),Se,phi(:,1),phi(:,2),...,phi(:,m),
 %  Note that off-diagonal terms of c.o.v. of S is the c.o.v. of coherence
 %
-%  cmat = cell of covariance matrix. Except for phi, all other entries are
-%  wrt multipliers (w/ MPV=1). This implies that the diagonal entries of
-%  cmat gives directly the sq. c.o.v.
-%  The covariance matrices of different bands are arranged row-wise as
-%   [f,z,diag of S, Re of off diag of S, Im of off diag of S, Se, phi] of 
-%   band 1, [...] of band 2, [...] of band 3, etc
-%
 % Note: 
 % The EM algorithm may be difficult to converge to true parameter values when
 % the modal signal-to-noise ratio S/(4z^2*Se) is greater than 1e5. A warning 
