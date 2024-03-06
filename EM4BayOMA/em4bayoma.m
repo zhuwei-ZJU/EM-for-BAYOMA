@@ -57,18 +57,28 @@ disp('-- Wei Zhu (weiz.20@intl.zju.edu.cn) - Feb 10, 2024');
 disp('============================================');
 
 %% defaults
-in_default.maxiter = 500;  % max. no. of iterations in determining MPV
-in_default.tol_cvg = 1e-5;  % convergence criterion
-in_default.tol_hess = 1e-4;
-in_default.z0 = 1e-2; % initial guess of damping
-in_default.zlim = [1e-4 1]; % range of z outside which result will be nan
-in_default.snmin = 1; % s/n ration below which result will be nan
-in_default.options_fmins = optimset('TolX',in_default.tol_cvg/10,...
-                   'TolFun',in_default.tol_cvg/10);
-in_default.p = 0;   % acceleration data
-
-%------------------------------------------------------------------------
-in = optfield(in,in_default);
+if ~isfield(in,'maxiter') || isempty(in.maxiter)
+    in.maxiter = 500;
+end
+if ~isfield(in,'tol_cvg') || isempty(in.tol_cvg)
+    in.tol_cvg = 1e-5;
+end
+if ~isfield(in,'z0') || isempty(in.z0)
+    in.z0 = 1e-2;
+end
+if ~isfield(in,'zlim') || isempty(in.zlim)
+    in.zlim = [1e-4 1];
+end
+if ~isfield(in,'snmin') || isempty(in.snmin)
+    in.snmin = 1;
+end
+if ~isfield(in,'options_fmins') || isempty(in.options_fmins)
+    in.options_fmins = optimset('TolX',in.tol_cvg/10,...
+                   'TolFun',in.tol_cvg/10);
+end
+if ~isfield(in,'p') || isempty(in.p)
+    in.p = 0;
+end
 
 %% ==========================================================================
 % check mandatory fields from IN
